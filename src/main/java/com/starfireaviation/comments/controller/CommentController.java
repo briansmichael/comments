@@ -16,12 +16,13 @@
 
 package com.starfireaviation.comments.controller;
 
-import com.starfireaviation.comments.exception.AccessDeniedException;
-import com.starfireaviation.comments.exception.InvalidPayloadException;
-import com.starfireaviation.comments.exception.ResourceNotFoundException;
-import com.starfireaviation.comments.model.Comment;
+import com.starfireaviation.common.exception.AccessDeniedException;
+import com.starfireaviation.common.exception.InvalidPayloadException;
+import com.starfireaviation.common.exception.ResourceNotFoundException;
+import com.starfireaviation.comments.model.CommentEntity;
 import com.starfireaviation.comments.service.CommentService;
 import com.starfireaviation.comments.validation.CommentValidator;
+import com.starfireaviation.common.model.Comment;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -34,15 +35,14 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.security.Principal;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * CommentController.
  */
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
-@RequestMapping({
-        "/comments"
-})
+@RequestMapping({ "/api/comments" })
 public class CommentController {
 
     /**
@@ -83,7 +83,7 @@ public class CommentController {
             throws InvalidPayloadException, ResourceNotFoundException, AccessDeniedException {
         commentValidator.validate(comment);
         commentValidator.accessAnyAuthenticated(principal);
-        return commentService.store(comment);
+        return map(commentService.store(map(comment)));
     }
 
     /**
@@ -96,13 +96,11 @@ public class CommentController {
      * @throws AccessDeniedException     when user doesn't have permission to
      *                                   perform operation
      */
-    @GetMapping(path = {
-            "/{commentId}"
-    })
-    public Comment get(@PathVariable("commentId") final long commentId, final Principal principal)
+    @GetMapping(path = { "/{commentId}" })
+    public Comment get(@PathVariable("commentId") final Long commentId, final Principal principal)
             throws ResourceNotFoundException, AccessDeniedException {
         commentValidator.accessAnyAuthenticated(principal);
-        return commentService.get(commentId);
+        return map(commentService.get(commentId));
     }
 
     /**
@@ -121,7 +119,7 @@ public class CommentController {
             throws ResourceNotFoundException, AccessDeniedException, InvalidPayloadException {
         commentValidator.validate(comment);
         commentValidator.accessAdmin(principal);
-        return commentService.store(comment);
+        return map(commentService.store(map(comment)));
     }
 
     /**
@@ -129,19 +127,16 @@ public class CommentController {
      *
      * @param commentId Long
      * @param principal Principal
-     * @return Comment
      * @throws ResourceNotFoundException when reference material is not found
      * @throws AccessDeniedException     when user doesn't have permission to
      *                                   perform operation
      */
-    @DeleteMapping(path = {
-            "/{commentId}"
-    })
-    public Comment delete(
-            @PathVariable("commentId") final long commentId,
+    @DeleteMapping(path = { "/{commentId}" })
+    public void delete(
+            @PathVariable("commentId") final Long commentId,
             final Principal principal) throws ResourceNotFoundException, AccessDeniedException {
         commentValidator.accessAdmin(principal);
-        return commentService.delete(commentId);
+        commentService.delete(commentId);
     }
 
     /**
@@ -154,9 +149,9 @@ public class CommentController {
      *                                   perform operation
      */
     @GetMapping
-    public List<Comment> list(final Principal principal) throws ResourceNotFoundException, AccessDeniedException {
+    public List<Long> list(final Principal principal) throws ResourceNotFoundException, AccessDeniedException {
         commentValidator.accessAnyAuthenticated(principal);
-        return commentService.getAll();
+        return commentService.getAll().stream().map(CommentEntity::getId).collect(Collectors.toList());
     }
 
     /**
@@ -169,12 +164,51 @@ public class CommentController {
      * @throws AccessDeniedException     when user doesn't have permission to
      *                                   perform operation
      */
-    @GetMapping({
-            "/{userId}"
-    })
-    public List<Comment> list(@PathVariable("userId") final long userId, final Principal principal)
+    @GetMapping({ "/{userId}" })
+    public List<Long> list(@PathVariable("userId") final Long userId, final Principal principal)
             throws ResourceNotFoundException, AccessDeniedException {
         commentValidator.accessAnyAuthenticated(principal);
-        return commentService.findCommentsByUserId(userId);
+        return commentService
+                .findCommentsByUserId(userId)
+                .stream()
+                .map(CommentEntity::getId)
+                .collect(Collectors.toList());
     }
+
+    /**
+     * Maps a CommentEntity to a Comment.
+     *
+     * @param commentEntity CommentEntity
+     * @return Comment
+     */
+    private Comment map(final CommentEntity commentEntity) {
+        final Comment comment = new Comment();
+        comment.setId(commentEntity.getId());
+        comment.setComponentType(commentEntity.getComponentType());
+        comment.setText(commentEntity.getText());
+        comment.setCreatedAt(commentEntity.getCreatedAt());
+        comment.setUpdatedAt(commentEntity.getUpdatedAt());
+        comment.setReferenceId(commentEntity.getReferenceId());
+        comment.setUserId(commentEntity.getUserId());
+        return comment;
+    }
+
+    /**
+     * Maps a Comment to a CommentEntity.
+     *
+     * @param comment Comment
+     * @return CommentEntity
+     */
+    private CommentEntity map(final Comment comment) {
+        final CommentEntity commentEntity = new CommentEntity();
+        commentEntity.setId(comment.getId());
+        commentEntity.setText(comment.getText());
+        commentEntity.setReferenceId(comment.getReferenceId());
+        commentEntity.setUserId(comment.getUserId());
+        commentEntity.setCreatedAt(comment.getCreatedAt());
+        commentEntity.setUpdatedAt(comment.getUpdatedAt());
+        commentEntity.setComponentType(comment.getComponentType());
+        return commentEntity;
+    }
+
 }

@@ -16,13 +16,13 @@
 
 package com.starfireaviation.comments.validation;
 
-import com.starfireaviation.comments.exception.AccessDeniedException;
-import com.starfireaviation.comments.exception.InvalidPayloadException;
-import com.starfireaviation.comments.exception.ResourceNotFoundException;
-import com.starfireaviation.comments.model.Comment;
+import com.starfireaviation.common.exception.AccessDeniedException;
+import com.starfireaviation.common.exception.InvalidPayloadException;
+import com.starfireaviation.common.exception.ResourceNotFoundException;
 import com.starfireaviation.comments.service.DataService;
-import com.starfireaviation.model.Role;
-import com.starfireaviation.model.User;
+import com.starfireaviation.common.model.Comment;
+import com.starfireaviation.common.model.Role;
+import com.starfireaviation.common.model.User;
 import lombok.extern.slf4j.Slf4j;
 
 import java.security.Principal;

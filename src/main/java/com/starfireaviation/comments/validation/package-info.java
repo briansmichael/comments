@@ -15,6 +15,6 @@
  */
 
 /**
- * Model classes.
+ * Validation classes.
  */
-package com.starfireaviation.comments.exception;
+package com.starfireaviation.comments.validation;

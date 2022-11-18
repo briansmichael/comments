@@ -16,11 +16,7 @@
 
 package com.starfireaviation.comments;
 
-import com.starfireaviation.model.Event;
-import com.starfireaviation.model.Question;
-import com.starfireaviation.model.Quiz;
-import com.starfireaviation.model.ReferenceMaterial;
-import com.starfireaviation.model.User;
+import com.starfireaviation.comments.model.CommentEntity;
 import lombok.Data;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
@@ -32,42 +28,7 @@ public class TestContext {
     /**
      * Comment.
      */
-    private Comment comment;
-
-    /**
-     * Event.
-     */
-    private Event event;
-
-    /**
-     * LessonPlan.
-     */
-    private LessonPlan lessonPlan;
-
-    /**
-     * Lesson.
-     */
-    private Lesson lesson;
-
-    /**
-     * Question.
-     */
-    private Question question;
-
-    /**
-     * Quiz.
-     */
-    private Quiz quiz;
-
-    /**
-     * ReferenceMaterial.
-     */
-    private ReferenceMaterial referenceMaterial;
-
-    /**
-     * User.
-     */
-    private User user;
+    private CommentEntity comment;
 
     /**
      * Response.
@@ -93,7 +54,7 @@ public class TestContext {
      * Resets attributes values to their defaults.
      */
     public void reset() {
-        question = null;
+        comment = null;
         response = null;
         organization = null;
         correlationId = null;

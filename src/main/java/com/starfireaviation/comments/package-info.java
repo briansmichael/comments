@@ -14,18 +14,7 @@
  *  limitations under the License.
  */
 
-package com.starfireaviation.comments.config;
-
-import lombok.Getter;
-import lombok.Setter;
-import org.springframework.boot.context.properties.ConfigurationProperties;
-
 /**
- * Application Properties.
+ * Comments application.
  */
-@Getter
-@Setter
-@ConfigurationProperties("comments")
-public class ApplicationProperties {
-
-}
+package com.starfireaviation.comments;

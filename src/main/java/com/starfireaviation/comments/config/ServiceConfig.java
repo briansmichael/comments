@@ -16,20 +16,14 @@
 
 package com.starfireaviation.comments.config;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.starfireaviation.comments.model.CommentRepository;
 import com.starfireaviation.comments.service.CommentService;
+import com.starfireaviation.comments.service.DataService;
 import com.starfireaviation.comments.validation.CommentValidator;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
-import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
-import org.springframework.web.client.RestTemplate;
-
-import java.net.http.HttpClient;
-import java.time.Duration;
 
 /**
  * ServiceConfig.
@@ -48,47 +42,6 @@ public class ServiceConfig {
     @Bean
     public CommentService commentService(final CommentRepository cRepository) {
         return new CommentService(cRepository);
-    }
-
-    /**
-     * HttpClient.
-     *
-     * @return HttpClient
-     */
-    @Bean
-    public HttpClient httpClient() {
-        return HttpClient.newHttpClient();
-    }
-
-    /**
-     * ObjectMapper.
-     *
-     * @return ObjectMapper
-     */
-    @Bean
-    public ObjectMapper objectMapper() {
-        return new ObjectMapper();
-    }
-
-    /**
-     * Creates a rest template with default timeout settings. The bean definition
-     * will be updated to accept timeout
-     * parameters once those are part of the Customer settings.
-     *
-     * @param restTemplateBuilder RestTemplateBuilder
-     * @param props   TimeoutProperties
-     *
-     * @return Rest Template with request, read, and connection timeouts set
-     */
-    @Bean
-    public RestTemplate restTemplate(
-            final RestTemplateBuilder restTemplateBuilder,
-            final ApplicationProperties props) {
-        return restTemplateBuilder
-                .setConnectTimeout(Duration.ofMillis(props.getConnect()))
-                .setReadTimeout(Duration.ofMillis(props.getRead()))
-                .additionalMessageConverters(new MappingJackson2HttpMessageConverter())
-                .build();
     }
 
     /**

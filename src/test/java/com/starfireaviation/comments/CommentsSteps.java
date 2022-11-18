@@ -16,8 +16,8 @@
 
 package com.starfireaviation.comments;
 
-import com.starfireaviation.comments.model.Comment;
-import com.starfireaviation.model.CommonConstants;
+import com.starfireaviation.comments.model.CommentEntity;
+import com.starfireaviation.common.CommonConstants;
 import io.cucumber.java.Before;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
@@ -59,7 +59,7 @@ public class CommentsSteps {
 
     @Given("^I have a comment")
     public void iHaveAComment() throws Throwable {
-        testContext.setComment(new Comment());
+        testContext.setComment(new CommentEntity());
     }
 
     @Given("^A comment exists")

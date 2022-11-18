@@ -16,7 +16,7 @@
 
 package com.starfireaviation.comments.service;
 
-import com.starfireaviation.comments.model.Comment;
+import com.starfireaviation.comments.model.CommentEntity;
 import com.starfireaviation.comments.model.CommentRepository;
 import lombok.extern.slf4j.Slf4j;
 
@@ -49,7 +49,7 @@ public class CommentService {
      * @param comment Comment
      * @return Comment
      */
-    public Comment store(final Comment comment) {
+    public CommentEntity store(final CommentEntity comment) {
         if (comment == null) {
             return comment;
         }
@@ -62,8 +62,8 @@ public class CommentService {
      * @param id Long
      * @return Comment
      */
-    public Comment delete(final long id) {
-        final Comment comment = get(id);
+    public CommentEntity delete(final long id) {
+        final CommentEntity comment = get(id);
         if (comment != null) {
             commentRepository.delete(comment);
         }
@@ -75,10 +75,10 @@ public class CommentService {
      *
      * @return list of Comment
      */
-    public List<Comment> getAll() {
-        final List<Comment> comments = new ArrayList<>();
-        final List<Comment> commentEntities = commentRepository.findAll();
-        for (final Comment commentEntity : commentEntities) {
+    public List<CommentEntity> getAll() {
+        final List<CommentEntity> comments = new ArrayList<>();
+        final List<CommentEntity> commentEntities = commentRepository.findAll();
+        for (final CommentEntity commentEntity : commentEntities) {
             comments.add(get(commentEntity.getId()));
         }
         return comments;
@@ -90,7 +90,7 @@ public class CommentService {
      * @param id Long
      * @return Comment
      */
-    public Comment get(final long id) {
+    public CommentEntity get(final long id) {
         return commentRepository.findById(id);
     }
 
@@ -100,10 +100,10 @@ public class CommentService {
      * @param userId Long
      * @return list of Comment
      */
-    public List<Comment> findCommentsByUserId(final Long userId) {
-        final List<Comment> comments = new ArrayList<>();
-        final List<Comment> commentEntities = commentRepository.findByUserId(userId);
-        for (final Comment commentEntity : commentEntities) {
+    public List<CommentEntity> findCommentsByUserId(final Long userId) {
+        final List<CommentEntity> comments = new ArrayList<>();
+        final List<CommentEntity> commentEntities = commentRepository.findByUserId(userId);
+        for (final CommentEntity commentEntity : commentEntities) {
             comments.add(get(commentEntity.getId()));
         }
         return comments;

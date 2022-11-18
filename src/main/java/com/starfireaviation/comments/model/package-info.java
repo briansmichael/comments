@@ -14,35 +14,7 @@
  *  limitations under the License.
  */
 
-package com.starfireaviation.comments.model;
-
 /**
- * ComponentType.
+ * Model classes.
  */
-public enum ComponentType {
-
-    /**
-     * NONE.
-     */
-    NONE,
-    /**
-     * EVENT.
-     */
-    EVENT,
-    /**
-     * QUIZ.
-     */
-    QUIZ,
-    /**
-     * QUESTION.
-     */
-    QUESTION,
-    /**
-     * LESSON.
-     */
-    LESSON,
-    /**
-     * REFERENCE_MATERIAL.
-     */
-    REFERENCE_MATERIAL;
-}
+package com.starfireaviation.comments.model;

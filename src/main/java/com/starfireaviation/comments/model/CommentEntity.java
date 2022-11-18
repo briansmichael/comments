@@ -16,7 +16,8 @@
 
 package com.starfireaviation.comments.model;
 
-import com.starfireaviation.model.CommonConstants;
+import com.starfireaviation.common.CommonConstants;
+import com.starfireaviation.common.model.ComponentType;
 import lombok.Data;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -38,7 +39,7 @@ import java.util.Date;
 @Data
 @Entity
 @Table(name = "COMMENT")
-public class Comment implements Serializable {
+public class CommentEntity implements Serializable {
 
     /**
      * Default SerialVersionUID.

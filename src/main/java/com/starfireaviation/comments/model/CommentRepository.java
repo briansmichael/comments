@@ -25,21 +25,21 @@ import java.util.List;
  *
  * @author brianmichael
  */
-public interface CommentRepository extends Repository<Comment, Long> {
+public interface CommentRepository extends Repository<CommentEntity, Long> {
 
     /**
      * Deletes a comment.
      *
      * @param comment Comment
      */
-    void delete(Comment comment);
+    void delete(CommentEntity comment);
 
     /**
      * Gets all comments.
      *
      * @return list of Comment
      */
-    List<Comment> findAll();
+    List<CommentEntity> findAll();
 
     /**
      * Gets a comment.
@@ -47,7 +47,7 @@ public interface CommentRepository extends Repository<Comment, Long> {
      * @param id Long
      * @return Quiz
      */
-    Comment findById(long id);
+    CommentEntity findById(long id);
 
     /**
      * Gets all comments for a given user.
@@ -55,7 +55,7 @@ public interface CommentRepository extends Repository<Comment, Long> {
      * @param id Long
      * @return list of Comment
      */
-    List<Comment> findByUserId(long id);
+    List<CommentEntity> findByUserId(long id);
 
     /**
      * Saves a comment.
@@ -63,5 +63,5 @@ public interface CommentRepository extends Repository<Comment, Long> {
      * @param comment Comment
      * @return Comment
      */
-    Comment save(Comment comment);
+    CommentEntity save(CommentEntity comment);
 }
